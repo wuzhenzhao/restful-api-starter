@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>API在线文档</title>
+    <link href="/api.css" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="/jquery.min.js"></script>
+    <script language="javascript" src="/jquery.dimensions.js"></script>
+</head>
+<body>
+<div class="tit">
+    <div id="titcont">
+        API在线文档<span class="sma"> 随风Restful Api 在线接口文档</span>
+    </div>
+</div>
+<p th:text="${applicationName}"></p>
+<div id="cont">
+    <div class='fun'>
+        <div class='lineface'>一、接口总述</div>
+        <span><em>说明</em></span>
+        <span class='ri'></span>
+        <div class='says'>
+            suifeng制作，涉及技术点 springboot自动注入配置，spring Lifecycle机制 ，
+            springboot-starter，EnableAutoConfiguration拓展，thymeleaf<br>
+            更多内容...<br>
+            更多内容...<br>
+        </div>
+    </div>
+    <div class='fun'>
+        <div class='lineface'>二、相关接口</div>
+
+        <div th:each="result:${result}">
+        <span class='le' style="font-size: 16px ;color:#999">接口名称: <em th:text="${result.interfaceName}" >接口名称</em>
+            <b th:text="${result.interfaceDesc}">描述</b></span>
+            <span class='ri'>方式:<em th:text="${result.requestMethods}"> GET</em></span>
+            <span class='ri'>接口地址:</span>
+            <span  th:text="${result.requestMappingUrl}" >接口地址: <em ></em></span><br/>
+            <span class='ri'>入参说明:</span>
+            <table style="margin-left: 80px">
+                <thead>
+                <th style="font-size: 14px;font-weight: lighter">字段名</th>
+                <th style="font-size: 14px;font-weight: lighter">字段类型</th>
+                <th style="font-size: 14px;font-weight: lighter">字段描述</th>
+                <th style="font-size: 14px;font-weight: lighter">是否必传</th>
+                </thead>
+                <tbody>
+                <tr th:each="apiParam:${result.requestParam}">
+                    <td th:text="${apiParam.filedName}"></td>
+                    <td th:text="${apiParam.filedType}"></td>
+                    <td th:text="${apiParam.filedDesc}"></td>
+                    <td th:text="${apiParam.mustInput}"></td>
+                        <table style="margin-left: 120px" th:if="${not #lists.isEmpty(apiParam.subApiParam)}">
+                            <tbody>
+                            <tr th:each="a:${apiParam.subApiParam}">
+                                <td th:text="|: ${a.filedName}|"></td>
+                                <td th:text="${a.filedType}"></td>
+                                <td th:text="${a.filedDesc}"></td>
+                                <td th:text="${a.mustInput}"></td>
+                                <table style="margin-left: 160px" th:if="${not #lists.isEmpty(a.subApiParam)}">
+                                    <tbody>
+                                    <tr th:each="b:${a.subApiParam}">
+                                        <td th:text="|: ${b.filedName}|"></td>
+                                        <td th:text="${b.filedType}"></td>
+                                        <td th:text="${b.filedDesc}"></td>
+                                        <td th:text="${b.mustInput}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </tr>
+                            </tbody>
+                        </table>
+                </tr>
+                </tbody>
+            </table><br/>
+            <span class='ri'>出参说明:</span>
+            <table style="margin-left: 80px">
+                <thead>
+                <th style="font-size: 14px;font-weight: lighter">字段名</th>
+                <th style="font-size: 14px;font-weight: lighter">字段类型</th>
+                <th style="font-size: 14px;font-weight: lighter">字段描述</th>
+                </thead>
+                <tbody>
+                <tr th:each="responseParam:${result.responseParam}">
+                    <td th:text="${responseParam.filedName}"></td>
+                    <td th:text="${responseParam.filedType}"></td>
+                    <td th:text="${responseParam.filedDesc}"></td>
+                    <table style="margin-left: 120px" th:if="${not #lists.isEmpty(responseParam.subApiParam)}">
+                        <tbody>
+                        <tr th:each="a:${responseParam.subApiParam}">
+                            <td th:text="|: ${a.filedName}|"></td>
+                            <td th:text="${a.filedType}"></td>
+                            <td th:text="${a.filedDesc}"></td>
+                            <table style="margin-left: 160px" th:if="${not #lists.isEmpty(a.subApiParam)}">
+                                <tbody>
+                                <tr th:each="b:${a.subApiParam}">
+                                    <td th:text="|: ${b.filedName}|"></td>
+                                    <td th:text="${b.filedType}"></td>
+                                    <td th:text="${b.filedDesc}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </tr>
+                        </tbody>
+                    </table>
+                </tr>
+                </tbody>
+            </table>
+        <hr></hr>
+        </div>
+
+    </div>
+</div>
+
+<div class="info">
+    <b>*</b> 本接口文档最后更新时间：<span class="red"><?php echo date("Y-m-d H:i:s",filemtime(__FILE__));?></span><br>
+</div>
+</div>
+<div id="foot">
+    中国.杭州.随风<br>
+    服务器端.技术研发中心&middot;2019年10月24日
+</div>
+
+</body>
+</html>
